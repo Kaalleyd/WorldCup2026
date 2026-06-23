@@ -28,85 +28,85 @@ const M=(h,a,hs,as,d,gr,g=[])=>({h,a,hs,as,st:"final",d,gr,g});
 const S=(h,a,d,gr,t,p)=>({h,a,hs:0,as:0,st:"scheduled",d,gr,t,p,g:[]});
 const MATCHES=[
   // ══ GROUPE A ══
-  M("MEX","RSA",2,0,"2026-06-11","A",[{s:"H",n:"Quiñones"},{s:"H",n:"Jiménez"}]),
-  M("KOR","CZE",2,1,"2026-06-12","A",[{s:"H",n:"Hwang In-Beom"},{s:"H",n:"Oh Hyeon-Gyu"},{s:"A",n:"Krejčí"}]),
-  M("CZE","RSA",1,1,"2026-06-18","A",[{s:"A",n:"Mokoena"}]),
+  M("MEX","RSA",2,0,"2026-06-11","A",[{s:"H"},{s:"H"}]),
+  M("KOR","CZE",2,1,"2026-06-12","A",[{s:"H"},{s:"H"},{s:"A"}]),
+  M("CZE","RSA",1,1,"2026-06-18","A",[{s:"A"}]),
   M("MEX","KOR",1,0,"2026-06-18","A"),
   S("CZE","MEX","2026-06-25","A","01:00",{h:25,a:49.8,d:25.2}),
   S("RSA","KOR","2026-06-25","A","01:00",{h:18.6,a:56.3,d:25.1}),
   // ══ GROUPE B ══
-  M("CAN","BIH",1,1,"2026-06-12","B",[{s:"H",n:"Larin"},{s:"A",n:"Lukić"}]),
-  M("SUI","QAT",1,1,"2026-06-13","B",[{s:"H",n:"Embolo"},{s:"A",n:"Khoukhi"}]),
-  M("SUI","BIH",4,1,"2026-06-18","B",[{s:"H",n:"Manzambi"},{s:"H",n:"Manzambi"},{s:"A",n:"Mahmić"}]),
-  M("CAN","QAT",6,0,"2026-06-18","B",[{s:"H",n:"Larin"},{s:"H",n:"J. David"},{s:"H",n:"J. David"},{s:"H",n:"N. Saliba"},{s:"H",n:"J. David"}]),
+  M("CAN","BIH",1,1,"2026-06-12","B",[{s:"H"},{s:"A"}]),
+  M("SUI","QAT",1,1,"2026-06-13","B",[{s:"H"},{s:"A"}]),
+  M("SUI","BIH",4,1,"2026-06-18","B",[{s:"H"},{s:"H"},{s:"A"}]),
+  M("CAN","QAT",6,0,"2026-06-18","B",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"H"}]),
   S("SUI","CAN","2026-06-24","B","19:00",{h:39.9,a:29.1,d:31}),
   S("BIH","QAT","2026-06-24","B","19:00",{h:69.5,a:12.4,d:18.1}),
   // ══ GROUPE C ══
-  M("BRA","MAR",1,1,"2026-06-13","C",[{s:"H",n:"Vinícius Jr"},{s:"A",n:"Saibari"}]),
-  M("SCO","HTI",1,0,"2026-06-14","C",[{s:"H",n:"McGinn",m:28}]),
+  M("BRA","MAR",1,1,"2026-06-13","C",[{s:"H"},{s:"A"}]),
+  M("SCO","HTI",1,0,"2026-06-14","C",[{s:"H",m:28}]),
   M("MAR","SCO",1,0,"2026-06-19","C"),
-  M("BRA","HTI",3,0,"2026-06-19","C",[{s:"H",n:"Cunha"},{s:"H",n:"Cunha"},{s:"H",n:"Vinícius Jr"}]),
+  M("BRA","HTI",3,0,"2026-06-19","C",[{s:"H"},{s:"H"},{s:"H"}]),
   S("SCO","BRA","2026-06-24","C","22:00",{h:11.1,a:70.6,d:18.3}),
   S("MAR","HTI","2026-06-24","C","22:00",{h:83.3,a:5,d:11.7}),
   // ══ GROUPE D ══
-  M("USA","PAR",4,1,"2026-06-12","D",[{s:"H",n:"Bobadilla og"},{s:"H",n:"Balogun"},{s:"H",n:"Balogun"},{s:"H",n:"Reyna"},{s:"A",n:"Maurício"}]),
-  M("AUS","TUR",2,0,"2026-06-13","D",[{s:"H",n:"Irankunda",m:27},{s:"H",n:"Metcalfe",m:75}]),
-  M("USA","AUS",2,0,"2026-06-19","D"),
-  M("TUR","PAR",0,1,"2026-06-19","D"),
+  M("USA","PAR",4,1,"2026-06-12","D",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
+  M("AUS","TUR",2,0,"2026-06-13","D",[{s:"H",m:27},{s:"H",m:75}]),
+  M("USA","AUS",2,0,"2026-06-19","D",[{s:"H"},{s:"H"}]),
+  M("TUR","PAR",0,1,"2026-06-19","D",[{s:"A"}]),
   S("TUR","USA","2026-06-25","D","04:00",{h:6.8,a:80.3,d:12.9}),
   S("PAR","AUS","2026-06-25","D","04:00",{h:35,a:40,d:25}),
   // ══ GROUPE E ══
-  M("GER","CUW",7,1,"2026-06-14","E",[{s:"H",n:"Nmecha"},{s:"H",n:"Schlotterbeck"},{s:"H",n:"Havertz"},{s:"H",n:"Musiala"},{s:"H",n:"Brown"},{s:"H",n:"Undav"},{s:"H",n:"Havertz"},{s:"A",n:"Comenencia"}]),
-  M("CIV","ECU",1,0,"2026-06-14","E",[{s:"H",n:"S. Diallo"}]),
-  M("GER","CIV",2,1,"2026-06-20","E",[{s:"H",n:"Undav"},{s:"H",n:"Undav"},{s:"A",n:"Kessié"}]),
+  M("GER","CUW",7,1,"2026-06-14","E",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
+  M("CIV","ECU",1,0,"2026-06-14","E",[{s:"H"}]),
+  M("GER","CIV",2,1,"2026-06-20","E",[{s:"H"},{s:"H"},{s:"A"}]),
   M("ECU","CUW",0,0,"2026-06-20","E"),
   S("ECU","GER","2026-06-25","E","20:00",{h:6,a:77,d:17}),
   S("CUW","CIV","2026-06-25","E","20:00",{h:5,a:85,d:10}),
   // ══ GROUPE F ══
-  M("NED","JPN",2,2,"2026-06-14","F",[{s:"H",n:"Van Dijk"},{s:"H",n:"Summerville"},{s:"A",n:"Nakamura"},{s:"A",n:"Kamada",m:88}]),
-  M("SWE","TUN",5,1,"2026-06-14","F",[{s:"H",n:"A. Isak"},{s:"H",n:"V. Gyökeres"},{s:"H",n:"Ayari"},{s:"H",n:"Ayari"},{s:"H",n:"Svanberg"},{s:"A",n:"Rekik"}]),
-  M("NED","SWE",5,1,"2026-06-20","F",[{s:"H",n:"Brobbey"},{s:"H",n:"Gakpo"},{s:"H",n:"Gakpo"},{s:"H",n:"Brobbey"},{s:"H",n:"Summerville"},{s:"A",n:"Elanga"}]),
-  M("JPN","TUN",4,0,"2026-06-20","F",[{s:"H",n:"Kamada",m:4},{s:"H",m:31},{s:"H",m:69},{s:"H",m:83}]),
+  M("NED","JPN",2,2,"2026-06-14","F",[{s:"H"},{s:"H"},{s:"A"},{s:"A",m:88}]),
+  M("SWE","TUN",5,1,"2026-06-14","F",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
+  M("NED","SWE",5,1,"2026-06-20","F",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
+  M("JPN","TUN",4,0,"2026-06-20","F",[{s:"H",m:4},{s:"H",m:31},{s:"H",m:69},{s:"H",m:83}]),
   S("JPN","SWE","2026-06-25","F","23:00",{h:45,a:30,d:25}),
   S("TUN","NED","2026-06-25","F","23:00",{h:5,a:80,d:15}),
   // ══ GROUPE G ══
-  M("BEL","EGY",1,1,"2026-06-15","G"),
-  M("IRN","NZL",2,2,"2026-06-15","G",[{s:"H",n:"Rezaeian"},{s:"A",n:"Just"}]),
+  M("BEL","EGY",1,1,"2026-06-15","G",[{s:"A"}]),
+  M("IRN","NZL",2,2,"2026-06-15","G",[{s:"H"},{s:"A"}]),
   M("BEL","IRN",0,0,"2026-06-21","G"),
-  M("NZL","EGY",1,3,"2026-06-22","G",[{s:"H",n:"Just",m:15},{s:"A",m:58},{s:"A",m:67},{s:"A",m:82}]),
+  M("NZL","EGY",1,3,"2026-06-22","G",[{s:"H",m:15},{s:"A",m:58},{s:"A",m:67},{s:"A",m:82}]),
   S("EGY","IRN","2026-06-26","G","03:00",{h:50,a:25,d:25}),
   S("NZL","BEL","2026-06-26","G","03:00",{h:15,a:60,d:25}),
   // ══ GROUPE H ══
   M("ESP","CPV",0,0,"2026-06-15","H"),
-  M("KSA","URU",1,1,"2026-06-15","H",[{s:"H",n:"Al-Amri"},{s:"A",n:"M. Araújo"}]),
-  M("ESP","KSA",4,0,"2026-06-21","H",[{s:"H",n:"Yamal",m:10},{s:"H",n:"Oyarzabal",m:21},{s:"H",n:"Oyarzabal",m:24},{s:"H",n:"Olmo",m:49}]),
-  M("URU","CPV",2,2,"2026-06-21","H",[{s:"A",m:21},{s:"H",m:44},{s:"H",n:"M. Araújo",m:45},{s:"A",m:61}]),
+  M("KSA","URU",1,1,"2026-06-15","H",[{s:"H"},{s:"A"}]),
+  M("ESP","KSA",4,0,"2026-06-21","H",[{s:"H",m:10},{s:"H",m:21},{s:"H",m:24},{s:"H",m:49}]),
+  M("URU","CPV",2,2,"2026-06-21","H",[{s:"A",m:21},{s:"H",m:44},{s:"H",m:45},{s:"A",m:61}]),
   S("CPV","KSA","2026-06-26","H","00:00",{h:40,a:35,d:25}),
   S("URU","ESP","2026-06-26","H","00:00",{h:20,a:60,d:20}),
   // ══ GROUPE I ══
-  M("FRA","SEN",3,1,"2026-06-16","I",[{s:"H",n:"Mbappé"},{s:"H",n:"Mbappé"},{s:"H",n:"Dembélé"},{s:"A",n:"Sarr"}]),
-  M("NOR","IRQ",4,1,"2026-06-16","I",[{s:"H",n:"Haaland"},{s:"H",n:"Haaland"},{s:"H",n:"Østigård"},{s:"H",n:"Hussein og"},{s:"A",n:"Hussein"}]),
-  M("FRA","IRQ",3,0,"2026-06-22","I",[{s:"H",n:"Mbappé",m:14},{s:"H",n:"Mbappé",m:54},{s:"H",n:"Barcola",m:66}]),
-  M("NOR","SEN",3,2,"2026-06-23","I",[{s:"H",n:"Haaland",m:43},{s:"H",n:"Haaland",m:48},{s:"A",n:"Sarr",m:53},{s:"H",m:58},{s:"A",n:"Sarr",m:90}]),
+  M("FRA","SEN",3,1,"2026-06-16","I",[{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
+  M("NOR","IRQ",4,1,"2026-06-16","I",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
+  M("FRA","IRQ",3,0,"2026-06-22","I",[{s:"H",m:14},{s:"H",m:54},{s:"H",m:66}]),
+  M("NOR","SEN",3,2,"2026-06-23","I",[{s:"H",m:43},{s:"H",m:48},{s:"A",m:53},{s:"H",m:58},{s:"A",m:90}]),
   S("NOR","FRA","2026-06-26","I","19:00",{h:35,a:45,d:20}),
   S("SEN","IRQ","2026-06-26","I","19:00",{h:50,a:20,d:30}),
   // ══ GROUPE J ══
-  M("ARG","DZA",3,0,"2026-06-16","J",[{s:"H",n:"Messi"},{s:"H",n:"Messi"},{s:"H",n:"Messi"}]),
-  M("AUT","JOR",3,1,"2026-06-17","J",[{s:"H",n:"Arnautović"}]),
-  M("ARG","AUT",2,0,"2026-06-22","J",[{s:"H",n:"Messi",m:38},{s:"H",n:"Messi",m:90}]),
+  M("ARG","DZA",3,0,"2026-06-16","J",[{s:"H"},{s:"H"},{s:"H"}]),
+  M("AUT","JOR",3,1,"2026-06-17","J",[{s:"H"}]),
+  M("ARG","AUT",2,0,"2026-06-22","J",[{s:"H",m:38},{s:"H",m:90}]),
   M("JOR","DZA",1,2,"2026-06-23","J",[{s:"H",m:36},{s:"A",m:69},{s:"A",m:82}]),
   S("DZA","AUT","2026-06-27","J","04:00",{h:40,a:30,d:30}),
   S("JOR","ARG","2026-06-27","J","04:00",{h:5,a:88,d:7}),
   // ══ GROUPE K ══
-  M("POR","COD",1,1,"2026-06-17","K",[{s:"H",n:"J. Neves"},{s:"A",n:"Wissa"}]),
-  M("COL","UZB",3,1,"2026-06-17","K",[{s:"H",n:"Muñoz"},{s:"H",n:"L. Díaz"},{s:"H",n:"Campaz"},{s:"A",n:"Fayzullaev"}]),
+  M("POR","COD",1,1,"2026-06-17","K",[{s:"H"},{s:"A"}]),
+  M("COL","UZB",3,1,"2026-06-17","K",[{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
   S("POR","UZB","2026-06-23","K","17:00",{h:85.8,a:4.2,d:10}),
   S("COL","COD","2026-06-23","K","02:00",{h:62.6,a:14.1,d:23.3}),
   S("COL","POR","2026-06-27","K","23:30",{h:35,a:45,d:20}),
   S("COD","UZB","2026-06-27","K","23:30",{h:55,a:20,d:25}),
   // ══ GROUPE L ══
-  M("ENG","CRO",4,2,"2026-06-17","L",[{s:"H",n:"Kane"},{s:"H",n:"Kane"},{s:"H",n:"Bellingham"},{s:"H",n:"Saka"},{s:"A",n:"Kramarić"}]),
-  M("GHA","PAN",1,0,"2026-06-17","L",[{s:"H",n:"Yirenkyi"}]),
+  M("ENG","CRO",4,2,"2026-06-17","L",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"A"},{s:"A"}]),
+  M("GHA","PAN",1,0,"2026-06-17","L",[{s:"H"}]),
   S("ENG","GHA","2026-06-23","L","20:00",{h:83.1,a:4.9,d:12}),
   S("PAN","CRO","2026-06-23","L","23:00",{h:13.9,a:65.4,d:20.7}),
   S("ENG","PAN","2026-06-27","L","23:00",{h:92,a:2,d:6}),
@@ -127,8 +127,56 @@ const STANDINGS={
   L:[{t:"ENG",pts:3,w:1,d:0,l:0},{t:"GHA",pts:3,w:1,d:0,l:0},{t:"PAN",pts:0,w:0,d:0,l:1},{t:"CRO",pts:0,w:0,d:0,l:1}],
 };
 
+
+// ══ PHASES FINALES ══
+const KO=[
+  {id:"r32",lb:"16èmes de Finale",matches:[
+    {no:73,h:"2e Gr.A",  a:"2e Gr.B",          d:"2026-06-28",v:"Los Angeles"},
+    {no:77,h:"1er Gr.I", a:"Meil.3e C/D/F/G/H", d:"2026-06-28",v:"New Jersey"},
+    {no:76,h:"1er Gr.C", a:"2e Gr.F",           d:"2026-06-29",v:"Houston"},
+    {no:74,h:"1er Gr.E", a:"Meil.3e A/B/C/D/F", d:"2026-06-29",v:"Boston"},
+    {no:75,h:"1er Gr.F", a:"2e Gr.C",           d:"2026-06-30",v:"Guadalajara"},
+    {no:78,h:"2e Gr.E",  a:"2e Gr.I",           d:"2026-06-30",v:"Dallas"},
+    {no:79,h:"1er Gr.A", a:"Meil.3e C/E/F/H/I", d:"2026-07-01",v:"Mexico City"},
+    {no:80,h:"1er Gr.L", a:"Meil.3e E/H/I/J/K", d:"2026-07-01",v:"Atlanta"},
+    {no:82,h:"1er Gr.G", a:"Meil.3e A/E/H/I/J", d:"2026-07-01",v:"Seattle"},
+    {no:81,h:"1er Gr.D", a:"Meil.3e B/E/F/I/J", d:"2026-07-01",v:"San Francisco"},
+    {no:84,h:"1er Gr.H", a:"2e Gr.J",           d:"2026-07-02",v:"Los Angeles"},
+    {no:83,h:"2e Gr.K",  a:"2e Gr.L",           d:"2026-07-02",v:"Toronto"},
+    {no:85,h:"1er Gr.B", a:"Meil.3e E/F/G/I/J", d:"2026-07-02",v:"Vancouver"},
+    {no:88,h:"2e Gr.D",  a:"2e Gr.G",           d:"2026-07-03",v:"Dallas"},
+    {no:86,h:"1er Gr.J", a:"2e Gr.H",           d:"2026-07-03",v:"Miami"},
+    {no:87,h:"1er Gr.K", a:"Meil.3e D/E/I/J/L", d:"2026-07-03",v:"Kansas City"},
+  ]},
+  {id:"r16",lb:"Huitièmes de Finale",matches:[
+    {no:90,h:"V.M73",a:"V.M75",d:"2026-07-04",v:"Houston"},
+    {no:89,h:"V.M74",a:"V.M77",d:"2026-07-04",v:"Philadelphie"},
+    {no:91,h:"V.M76",a:"V.M78",d:"2026-07-05",v:"New Jersey"},
+    {no:92,h:"V.M79",a:"V.M80",d:"2026-07-05",v:"Mexico City"},
+    {no:93,h:"V.M83",a:"V.M84",d:"2026-07-06",v:"Dallas"},
+    {no:94,h:"V.M81",a:"V.M82",d:"2026-07-06",v:"Seattle"},
+    {no:95,h:"V.M86",a:"V.M88",d:"2026-07-07",v:"Atlanta"},
+    {no:96,h:"V.M85",a:"V.M87",d:"2026-07-07",v:"Vancouver"},
+  ]},
+  {id:"qf",lb:"Quarts de Finale",matches:[
+    {no:97, h:"V.M89",a:"V.M90",d:"2026-07-09",v:"Boston"},
+    {no:98, h:"V.M91",a:"V.M92",d:"2026-07-10",v:"Mexico City"},
+    {no:99, h:"V.M93",a:"V.M94",d:"2026-07-11",v:"Dallas"},
+    {no:100,h:"V.M95",a:"V.M96",d:"2026-07-11",v:"Atlanta"},
+  ]},
+  {id:"sf",lb:"Demi-Finales",matches:[
+    {no:101,h:"V.M97", a:"V.M98", d:"2026-07-14",v:"Dallas"},
+    {no:102,h:"V.M99", a:"V.M100",d:"2026-07-15",v:"Atlanta"},
+  ]},
+  {id:"tp",lb:"Match 3e Place",matches:[
+    {no:103,h:"P.M101",a:"P.M102",d:"2026-07-18",v:"Miami"},
+  ]},
+  {id:"fin",lb:"🏆 Finale",matches:[
+    {no:104,h:"V.M101",a:"V.M102",d:"2026-07-19",v:"New Jersey — MetLife"},
+  ]},
+];
 // ── État global ───────────────────────────────────────────────────────────────
-let state={tab:"matches",filter:"all",sec:"scorers",matches:[...MATCHES],st:{...STANDINGS},loading:false,err:null};
+let state={tab:"matches",filter:"all",sec:"scorers",kr:"r32",refreshed:false,matches:[...MATCHES],st:{...STANDINGS},loading:false,err:null};
 function setState(o){Object.assign(state,o);render();}
 
 // ── Utilitaires ───────────────────────────────────────────────────────────────
@@ -144,25 +192,59 @@ function getScorers(ms){
   }));
   return Object.values(m).sort((a,b)=>b.goals-a.goals);
 }
-function gStr(arr){return arr.map(g=>g.n&&g.m?g.n+" "+g.m+"'":g.n?g.n:g.m?g.m+"'":"⚽");}
+function gStr(arr){
+  return arr.filter(g=>g.s||g.m||g.n).map(g=>{
+    const conf = g.c===0 ? " ⚠" : "";
+    if(g.n&&g.m) return g.n+" "+g.m+"'"+conf;
+    if(g.n)      return g.n+conf;
+    if(g.m)      return g.m+"'"+conf;
+    return "⚽";
+  });
+}
 
 // ── Refresh API ───────────────────────────────────────────────────────────────
 async function doRefresh(){
   setState({loading:true,err:null});
   try{
     const rsp=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,tools:[{type:"web_search_20250305",name:"web_search"}],
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:3000,tools:[{type:"web_search_20250305",name:"web_search"}],
         messages:[{role:"user",content:"Search FIFA World Cup 2026 latest scores and standings today. Return ONLY valid JSON no markdown: {\"matches\":[{\"h\":\"ESP\",\"a\":\"KSA\",\"hs\":4,\"as\":0,\"st\":\"final\",\"d\":\"2026-06-21\",\"gr\":\"H\",\"g\":[{\"s\":\"H\",\"n\":\"Scorer\",\"m\":10}]}],\"standings\":[{\"gr\":\"A\",\"t\":\"MEX\",\"pts\":6,\"w\":2,\"d\":0,\"l\":0}]}"}]})});
     if(rsp.status===429)throw new Error("Limite API — patientez 1 min");
     if(!rsp.ok)throw new Error("HTTP "+rsp.status);
     const data=await rsp.json();
-    const txt=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
-    const jm=txt.match(/\{[\s\S]*\}/);
-    if(jm){const p=JSON.parse(jm[0]);
-      if(p.matches?.length>0)state.matches=p.matches;
-      if(p.standings?.length>=8){const g={};p.standings.forEach(s=>{if(!g[s.gr])g[s.gr]=[];g[s.gr].push(s);});Object.keys(g).forEach(k=>g[k].sort((a,b)=>b.pts-a.pts));if(Object.keys(g).length>=8)state.st=g;}
-    }
-    setState({loading:false,err:null});
+     // Extract all text from response
+     const txt=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
+     // Strip markdown fences, then try multiple JSON extraction strategies
+     const cleaned=txt.replace(/```(?:json)?\n?/g,"").replace(/```/g,"");
+     let parsed=null;
+     const tryParse=s=>{ try{return JSON.parse(s);}catch(e){try{return JSON.parse(s.replace(/,(\s*[}\]])/g,"$1"));}catch(e2){return null;}} };
+     // Strategy 1: find {"matches": or { "matches":
+     for(const pat of['{"matches"','{ "matches"']){
+       const si=cleaned.indexOf(pat);
+       if(si<0)continue;
+       let depth=0,ei=-1;
+       for(let i=si;i<cleaned.length;i++){if(cleaned[i]==="{")depth++;else if(cleaned[i]==="}"){depth--;if(depth===0){ei=i;break;}}}
+       if(ei>si){parsed=tryParse(cleaned.slice(si,ei+1));if(parsed)break;}
+     }
+     // Strategy 2: find any top-level JSON object
+     if(!parsed){
+       const si=cleaned.indexOf("{");
+       if(si>=0){let depth=0,ei=-1;for(let i=si;i<cleaned.length;i++){if(cleaned[i]==="{")depth++;else if(cleaned[i]==="}"){depth--;if(depth===0){ei=i;break;}}}if(ei>si)parsed=tryParse(cleaned.slice(si,ei+1));}
+     }
+     if(parsed&&(parsed.matches||parsed.standings)){
+       if(Array.isArray(parsed.matches)&&parsed.matches.length>0)state.matches=parsed.matches;
+       if(Array.isArray(parsed.standings)&&parsed.standings.length>=8){
+         const g={};parsed.standings.forEach(s=>{const k=s.gr||s.group;if(!g[k])g[k]=[];g[k].push({t:s.t||s.team,...s});});
+         Object.keys(g).forEach(k=>g[k].sort((a,b)=>b.pts-a.pts));
+         if(Object.keys(g).length>=8)state.st=g;
+       }
+       setState({loading:false,err:null,refreshed:true});
+     } else {
+       // Show a snippet of what we got to help debug
+       const preview=cleaned.slice(0,80).replace(/\n/g," ");
+       setState({loading:false,err:"Format inattendu: "+preview+"...",refreshed:state.refreshed});
+     }
+     }
   }catch(e){setState({loading:false,err:e.message});}
 }
 
@@ -181,7 +263,7 @@ function el(tag,attrs,...kids){
 function s(o){return{style:o};}
 
 function renderHeader(){
-  return el("header",{style:{background:"linear-gradient(155deg,#0b1f3a,#0d2b1f,#07101f)",borderBottom:"2px solid #c89520",padding:"14px 16px 10px",textAlign:"center",position:"sticky",top:"0",zIndex:"100"}},
+  return el("header",{style:{background:"linear-gradient(155deg,#0b1f3a,#0d2b1f,#07101f)",borderBottom:"2px solid #c89520",padding:"14px 16px 10px",textAligpositiotop:"0",zIndex:"100"}},
     el("div",s({fontSize:"19px",fontWeight:"900",letterSpacing:"2px",color:"#c89520"}),"🏆 FIFA COUPE DU MONDE 2026"),
     el("div",s({fontSize:"9px",color:"#64748b",marginTop:"2px",letterSpacing:"1px"}),"USA · CANADA · MEXIQUE | 48 ÉQUIPES · 12 GROUPES | 11 JUIN – 19 JUILLET 2026"),
     el("div",s({display:"flex",alignItems:"center",justifyContent:"center",gap:"10px",marginTop:"7px"}),
@@ -195,7 +277,7 @@ function renderHeader(){
 }
 
 function renderNav(){
-  const tabs=[{k:"matches",ic:"📅",lb:"Matchs"},{k:"groups",ic:"🔷",lb:"Groupes"},{k:"standings",ic:"📊",lb:"Classements"},{k:"stats",ic:"🏅",lb:"Stats"}];
+  const tabs=[{k:"matches",ic:"📅",lb:"Matchs"},{k:"groups",ic:"🔷",lb:"Groupes"},{k:"standings",ic:"📊",lb:"Classements"},{k:"stats",ic:"🏅",lb:"Stats"},{k:"knockout",ic:"⚔️",lb:"Élimination"}];
   return el("nav",s({display:"flex",background:"#0b1525",borderBottom:"1px solid #1e2d45"}),
     ...tabs.map(t=>el("button",{style:{flex:"1",padding:"11px 2px",background:"transparent",border:"none",borderBottom:state.tab===t.k?"3px solid #c89520":"3px solid transparent",color:state.tab===t.k?"#c89520":"#475569",fontWeight:state.tab===t.k?"700":"400",fontSize:"11.5px"},onClick:()=>setState({tab:t.k})},t.ic+" "+t.lb))
   );
@@ -210,16 +292,16 @@ function renderMatchCard(m){
   const card=el("div",{className:"mc",style:{background:iC?"rgba(255,140,0,.055)":"#0d1b2e",border:`1px solid ${iL?"#ef4444":iC?"rgba(255,140,0,.22)":"#1e2d45"}`,borderRadius:"9px",padding:"9px 11px",marginBottom:"5px"}});
   const row=el("div",s({display:"flex",alignItems:"center",gap:"5px"}));
 
-  row.appendChild(el("span",s({background:"#0f2040",color:"#475569",fontSize:"9px",fontWeight:"700",padding:"2px 5px",borderRadius:"4px",minWidth:"18px",textAlign:"center",flexShrink:"0"}),gr));
+  row.appendChild(el("span",s({background:"#0f2040",color:"#475569",fontSize:"9px",fontWeight:"700",padding:"2px 5px",borderRadius:"4px",minWidth:"18px",textAligflexShrink:"0"}),gr));
 
-  const hDiv=el("div",s({flex:"1",textAlign:"right",minWidth:"0"}));
+  const hDiv=el("div",s({flex:"1",textAligminWidth:"0"}));
   const hInner=el("div",s({display:"flex",alignItems:"center",justifyContent:"flex-end",gap:"5px"}));
   hInner.appendChild(el("span",s({fontSize:"12.5px",fontWeight:"600",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",color:iC&&h==="CIV"?"#fb923c":"#e2e8f0"}),(F[h]||"🏳")+" "+(N[h]||h)));
   if(rH)hInner.appendChild(el("span",s({width:"8px",height:"8px",borderRadius:"50%",background:VC[rH],display:"inline-block",flexShrink:"0"}),""));
   hDiv.appendChild(hInner);
   row.appendChild(hDiv);
 
-  row.appendChild(el("div",s({minWidth:"56px",textAlign:"center",fontSize:"20px",fontWeight:"900",letterSpacing:"2px",color:iF?"#fff":iL?"#ef4444":"#1e3a5f"}),iF||iL?hs+" - "+as_:"·-·"));
+  row.appendChild(el("div",s({minWidth:"56px",textAligfontSize:"20px",fontWeight:"900",letterSpacing:"2px",color:iF?"#fff":iL?"#ef4444":"#1e3a5f"}),iF||iL?hs+" - "+as_:"·-·"));
 
   const aDiv=el("div",s({flex:"1",minWidth:"0"}));
   const aInner=el("div",s({display:"flex",alignItems:"center",gap:"5px"}));
@@ -228,7 +310,7 @@ function renderMatchCard(m){
   aDiv.appendChild(aInner);
   row.appendChild(aDiv);
 
-  const stDiv=el("div",s({minWidth:"50px",textAlign:"right",flexShrink:"0"}));
+  const stDiv=el("div",s({minWidth:"50px",textAligflexShrink:"0"}));
   if(iL)stDiv.appendChild(el("span",s({background:"#ef4444",color:"#fff",fontSize:"9px",padding:"2px 6px",borderRadius:"4px",fontWeight:"700",animation:"pulse 1.2s infinite"}),"LIVE"));
   else if(iF)stDiv.appendChild(el("span",s({color:"#2d3f55",fontSize:"10px"}),"Terminé"));
   else if(iS){stDiv.appendChild(el("div",s({color:"#64748b",fontSize:"10px",fontWeight:"600"}),(t||"")+" GMT"));if(p)stDiv.appendChild(el("div",s({fontSize:"9px",color:"#2d3f55"}),p.h+"%/"+p.a+"%"));}
@@ -254,8 +336,8 @@ function renderGroupCard(group,teams){
   wrap.appendChild(el("div",s({fontWeight:"800",fontSize:"13px",color:"#c89520",letterSpacing:"2px",marginBottom:"9px",paddingBottom:"7px",borderBottom:"1px solid #1e2d45"}),"GROUPE "+group));
   const tbl=el("table",null);
   const thead=el("tr",s({color:"#2d3f55",fontSize:"9.5px"}));
-  thead.appendChild(el("th",{style:{textAlign:"left",paddingBottom:"3px",fontWeight:"600"}},"Équipe"));
-  ["J","G","N","P","Pts"].forEach(h=>thead.appendChild(el("th",s({width:"22px",textAlign:"center",paddingBottom:"3px",fontWeight:"600"}),h)));
+  thead.appendChild(el("th",{style:{textAligpaddingBottom:"3px",fontWeight:"600"}},"Équipe"));
+  ["J","G","N","P","Pts"].forEach(h=>thead.appendChild(el("th",s({width:"22px",textAligpaddingBottom:"3px",fontWeight:"600"}),h)));
   tbl.appendChild(el("thead",null,thead));
   const tbody=el("tbody",null);
   teams.forEach((tm,i)=>{
@@ -266,7 +348,7 @@ function renderGroupCard(group,teams){
     td.appendChild(document.createTextNode((F[c]||"🏳")+" "));
     td.appendChild(el("span",s({color:iC2?"#fb923c":"#e2e8f0"}),N[c]||c));
     tr.appendChild(td);
-    [pl,tm.w||0,tm.d||0,tm.l||0,tm.pts||0].forEach((v,vi)=>tr.appendChild(el("td",s({textAlign:"center",fontSize:"11px",color:vi===1?"#4ade80":vi===2?"#818cf8":vi===3?"#f87171":vi===4?"#c89520":"#64748b",fontWeight:vi===4?"800":"400",padding:"5.5px 2px"}),v+"")));
+    [pl,tm.w||0,tm.d||0,tm.l||0,tm.pts||0].forEach((v,vi)=>tr.appendChild(el("td",s({textAligfontSize:"11px",color:vi===1?"#4ade80":vi===2?"#818cf8":vi===3?"#f87171":vi===4?"#c89520":"#64748b",fontWeight:vi===4?"800":"400",padding:"5.5px 2px"}),v+"")));
     tbody.appendChild(tr);
   });
   tbl.appendChild(tbody);
@@ -291,7 +373,7 @@ function renderStandingFull(group,teams){
     td2.appendChild(document.createTextNode((F[c]||"🏳")+" "));
     td2.appendChild(el("span",s({color:iC2?"#fb923c":"#e2e8f0"}),N[c]||c));
     tr.appendChild(td2);
-    [pl,tm.w||0,tm.d||0,tm.l||0,tm.pts||0].forEach((v,vi)=>tr.appendChild(el("td",s({textAlign:"center",fontSize:vi===4?"13px":"12px",color:vi===1?"#4ade80":vi===2?"#818cf8":vi===3?"#f87171":vi===4?"#c89520":"#64748b",fontWeight:vi===4?"800":"400",padding:"9px 5px"}),v+"")));
+    [pl,tm.w||0,tm.d||0,tm.l||0,tm.pts||0].forEach((v,vi)=>tr.appendChild(el("td",s({textAligfontSize:vi===4?"13px":"12px",color:vi===1?"#4ade80":vi===2?"#818cf8":vi===3?"#f87171":vi===4?"#c89520":"#64748b",fontWeight:vi===4?"800":"400",padding:"9px 5px"}),v+"")));
     tbody.appendChild(tr);
   });
   tbl.appendChild(tbody);
@@ -310,6 +392,18 @@ function render(){
   const sorted=[...state.matches].sort((a,b)=>a.d.localeCompare(b.d));
 
   if(state.tab==="matches"){
+    // Refresh hint banner if not yet refreshed
+    if(!state.refreshed){
+      const banner=el("div",s({
+        background:"rgba(200,149,32,.08)",border:"1px solid rgba(200,149,32,.25)",
+        borderRadius:"8px",padding:"8px 12px",marginBottom:"10px",
+        display:"flex",alignItems:"center",gap:"8px"
+      }));
+      banner.appendChild(el("span",s({fontSize:"11px",color:"#c89520"}),"⚠"));
+      banner.appendChild(el("span",s({fontSize:"11px",color:"#94a3b8"}),
+        "Cliquez sur Actualiser pour charger les buteurs depuis les sources live."));
+      main.appendChild(banner);
+    }
     const filterRow=el("div",s({display:"flex",gap:"7px",marginBottom:"12px"}));
     [["all","Tous"],["played","Joués ✓"],["upcoming","À venir"]].forEach(([v,l])=>{
       filterRow.appendChild(el("button",{style:{padding:"4px 12px",borderRadius:"20px",border:"1px solid",borderColor:state.filter===v?"#c89520":"#1e2d45",background:state.filter===v?"rgba(200,149,32,.13)":"transparent",color:state.filter===v?"#c89520":"#64748b",fontSize:"11px"},onClick:()=>setState({filter:v})},l));
@@ -354,7 +448,7 @@ function render(){
         const td3=el("td",s({padding:"10px 11px",fontSize:"13px"}));
         td3.appendChild(document.createTextNode((F[sc.team]||"🏳")+" "+(N[sc.team]||sc.team)));
         tr.appendChild(td3);
-        tr.appendChild(el("td",s({padding:"10px 7px",textAlign:"center",fontSize:"16px",fontWeight:"900",color:"#c89520"}),sc.goals+""));
+        tr.appendChild(el("td",s({padding:"10px 7px",textAligfontSize:"16px",fontWeight:"900",color:"#c89520"}),sc.goals+""));
         tbody.appendChild(tr);
       });
       tbl.appendChild(tbody);
@@ -378,6 +472,62 @@ function render(){
         row2.appendChild(mDiv);
         row2.appendChild(el("div",s({fontSize:"9px",color:"#2d3f55"}),fmtDs(m.d)+" · Gr."+m.gr));
         main.appendChild(row2);
+      });
+    }
+  }
+
+  else if(state.tab==="knockout"){
+    // Sub-nav
+    const kn=el("div",s({display:"flex",gap:"6px",marginBottom:"14px",flexWrap:"wrap"}));
+    KO.forEach(r=>{
+      kn.appendChild(el("button",{style:{padding:"5px 12px",borderRadius:"20px",border:"1px solid",
+        borderColor:state.kr===r.id?"#c89520":"#1e2d45",
+        background:state.kr===r.id?"rgba(200,149,32,.13)":"transparent",
+        color:state.kr===r.id?"#c89520":"#64748b",fontSize:"11px",cursor:"pointer",fontWeight:state.kr===r.id?"700":"400"},
+        onClick:()=>setState({kr:r.id})},r.lb));
+    });
+    main.appendChild(kn);
+
+    const round=KO.find(r=>r.id===state.kr);
+    if(round){
+      round.matches.forEach(m=>{
+        const card=el("div",s({background:m.st==="final"?"#0a1829":"#0d1b2e",border:"1px solid "+(m.st==="final"?"#c89520":"#1e2d45"),borderRadius:"9px",padding:"10px 12px",marginBottom:"6px"}));
+        // Top row: match no + date + venue
+        const top=el("div",s({display:"flex",justifyContent:"space-between",marginBottom:"7px"}));
+        top.appendChild(el("span",s({fontSize:"9px",fontWeight:"700",color:"#c89520",background:"rgba(200,149,32,.1)",padding:"2px 7px",borderRadius:"4px"}),"M"+m.no));
+        top.appendChild(el("span",s({fontSize:"9px",color:"#475569"}),new Date(m.d+"T12:00:00Z").toLocaleDateString("fr-FR",{day:"numeric",month:"short"})+" · "+m.v));
+        card.appendChild(top);
+        // Score row
+        const row=el("div",s({display:"flex",alignItems:"center",gap:"6px"}));
+        // Home
+        const hDiv=el("div",s({flex:"1",textAlign:"right"}));
+        if(m.hs!==null&&m.hs!==undefined){
+          const rH=m.hs>m.as?"W":m.hs<m.as?"L":"D";
+          hDiv.appendChild(el("div",s({display:"flex",alignItems:"center",justifyContent:"flex-end",gap:"5px"}),
+            el("span",s({fontSize:"13px",fontWeight:"600",color:F[m.h]?"#e2e8f0":"#64748b"}),(F[m.h]||"")+" "+(N[m.h]||m.h)),
+            el("span",s({width:"7px",height:"7px",borderRadius:"50%",background:VC[rH],display:"inline-block"}),"")
+          ));
+        } else {
+          hDiv.appendChild(el("div",s({fontSize:"12px",fontWeight:"600",color:F[m.h]?"#e2e8f0":"#4b6280"}),(F[m.h]||"")+" "+(N[m.h]||m.h)));
+        }
+        row.appendChild(hDiv);
+        // Score
+        const sc=m.hs!==null&&m.hs!==undefined?m.hs+" - "+m.as:"?  -  ?";
+        row.appendChild(el("div",s({minWidth:"60px",textAligfontSize:m.hs!==null?"20px":"14px",fontWeight:"900",letterSpacing:"2px",color:m.hs!==null?"#fff":"#1e3a5f"}),sc));
+        // Away
+        const aDiv=el("div",s({flex:"1"}));
+        if(m.hs!==null&&m.hs!==undefined){
+          const rA=m.as>m.hs?"W":m.as<m.hs?"L":"D";
+          aDiv.appendChild(el("div",s({display:"flex",alignItems:"center",gap:"5px"}),
+            el("span",s({width:"7px",height:"7px",borderRadius:"50%",background:VC[rA],display:"inline-block"}),""),
+            el("span",s({fontSize:"13px",fontWeight:"600",color:F[m.a]?"#e2e8f0":"#64748b"}),(N[m.a]||m.a)+" "+(F[m.a]||""))
+          ));
+        } else {
+          aDiv.appendChild(el("div",s({fontSize:"12px",fontWeight:"600",color:F[m.a]?"#e2e8f0":"#4b6280"}),(N[m.a]||m.a)+" "+(F[m.a]||"")));
+        }
+        row.appendChild(aDiv);
+        card.appendChild(row);
+        main.appendChild(card);
       });
     }
   }
