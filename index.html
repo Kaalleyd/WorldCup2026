@@ -212,38 +212,36 @@ async function doRefresh(){
     if(rsp.status===429)throw new Error("Limite API — patientez 1 min");
     if(!rsp.ok)throw new Error("HTTP "+rsp.status);
     const data=await rsp.json();
-     // Extract all text from response
-     const txt=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
-     // Strip markdown fences, then try multiple JSON extraction strategies
-     const cleaned=txt.replace(/```(?:json)?\n?/g,"").replace(/```/g,"");
+     const allText=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(" ");
+     const noFences=allText.replace(/```[a-z]*\n?/g,"");
      let parsed=null;
-     const tryParse=s=>{ try{return JSON.parse(s);}catch(e){try{return JSON.parse(s.replace(/,(\s*[}\]])/g,"$1"));}catch(e2){return null;}} };
-     // Strategy 1: find {"matches": or { "matches":
-     for(const pat of['{"matches"','{ "matches"']){
-       const si=cleaned.indexOf(pat);
-       if(si<0)continue;
-       let depth=0,ei=-1;
-       for(let i=si;i<cleaned.length;i++){if(cleaned[i]==="{")depth++;else if(cleaned[i]==="}"){depth--;if(depth===0){ei=i;break;}}}
-       if(ei>si){parsed=tryParse(cleaned.slice(si,ei+1));if(parsed)break;}
-     }
-     // Strategy 2: find any top-level JSON object
-     if(!parsed){
-       const si=cleaned.indexOf("{");
-       if(si>=0){let depth=0,ei=-1;for(let i=si;i<cleaned.length;i++){if(cleaned[i]==="{")depth++;else if(cleaned[i]==="}"){depth--;if(depth===0){ei=i;break;}}}if(ei>si)parsed=tryParse(cleaned.slice(si,ei+1));}
+     const candidates=[noFences.indexOf('{"matches"'),noFences.indexOf('{ "matches"')];
+     const si=Math.max(...candidates);
+     if(si>=0){
+       let d=0,ei=-1;
+       for(let i=si;i<noFences.length;i++){
+         if(noFences[i]==="{")d++;
+         else if(noFences[i]==="}"){d--;if(d===0){ei=i;break;}}
+       }
+       if(ei>si){
+         const chunk=noFences.slice(si,ei+1);
+         try{parsed=JSON.parse(chunk);}catch(e){
+           const chunk2=chunk.replace(/,([\s]*[}\]])/g,"$1");
+           try{parsed=JSON.parse(chunk2);}catch(e2){parsed=null;}
+         }
+       }
      }
      if(parsed&&(parsed.matches||parsed.standings)){
        if(Array.isArray(parsed.matches)&&parsed.matches.length>0)state.matches=parsed.matches;
        if(Array.isArray(parsed.standings)&&parsed.standings.length>=8){
-         const g={};parsed.standings.forEach(s=>{const k=s.gr||s.group;if(!g[k])g[k]=[];g[k].push({t:s.t||s.team,...s});});
-         Object.keys(g).forEach(k=>g[k].sort((a,b)=>b.pts-a.pts));
-         if(Object.keys(g).length>=8)state.st=g;
+         const grp={};parsed.standings.forEach(function(s){const k=s.gr||s.group;if(!grp[k])grp[k]=[];grp[k].push({t:s.t||s.team,pts:s.pts,w:s.w,d:s.d,l:s.l});});
+         Object.keys(grp).forEach(function(k){grp[k].sort(function(a,b){return b.pts-a.pts;});});
+         if(Object.keys(grp).length>=8)state.st=grp;
        }
        setState({loading:false,err:null,refreshed:true});
      } else {
-       // Show a snippet of what we got to help debug
-       const preview=cleaned.slice(0,80).replace(/\n/g," ");
-       setState({loading:false,err:"Format inattendu: "+preview+"...",refreshed:state.refreshed});
-     }
+       const preview=noFences.trim().slice(0,60).replace(/\n/g," ");
+       setState({loading:false,err:"Format inattendu: "+preview,refreshed:state.refreshed});
      }
   }catch(e){setState({loading:false,err:e.message});}
 }
