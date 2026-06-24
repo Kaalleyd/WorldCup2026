@@ -206,15 +206,43 @@ function gStr(arr){
 async function doRefresh(){
   setState({loading:true,err:null});
   try{
-    // ESPN public API — no auth needed, CORS-friendly
-    const r=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?limit=100&dates=20260611-20260719");
-    if(!r.ok)throw new Error("ESPN HTTP "+r.status);
-    const data=await r.json();
-    // ESPN abbrev → our FIFA codes
-    const remap={"MAR":"MAR","KOR":"KOR","IRN":"IRN","SAU":"KSA","CPV":"CPV","DRC":"COD","COD":"COD","ALG":"DZA","DZA":"DZA","CIV":"CIV","AUS":"AUS","NZL":"NZL","SCO":"SCO","HAI":"HTI","HTI":"HTI","BOH":"BIH","BIH":"BIH","CUW":"CUW","SUI":"SUI","NOR":"NOR","SWE":"SWE","URU":"URU","PAR":"PAR","COL":"COL","UZB":"UZB","CRO":"CRO","GHA":"GHA","PAN":"PAN","ENG":"ENG","FRA":"FRA","ARG":"ARG","BRA":"BRA","ESP":"ESP","GER":"GER","USA":"USA","MEX":"MEX","JPN":"JPN","NED":"NED","BEL":"BEL","POR":"POR","EGY":"EGY","SEN":"SEN"};
-    const norm=c=>remap[c]||c;
-    const newMatches=[];
-    (data.events||[]).forEach(function(ev){
+    // ESPN abbreviation → our FIFA codes (extended mapping)
+    const MAP={
+      "ALG":"DZA","DZA":"DZA","SAU":"KSA","KSA":"KSA","DRC":"COD","COD":"COD",
+      "HAI":"HTI","HTI":"HTI","BOH":"BIH","BIH":"BIH","SCO":"SCO","NZL":"NZL",
+      "CPV":"CPV","CVI":"CPV","CV":"CPV","SUI":"SUI","NOR":"NOR","CRO":"CRO",
+      "GHA":"GHA","PAN":"PAN","URU":"URU","PAR":"PAR","ECU":"ECU","CUW":"CUW",
+      "UZB":"UZB","JOR":"JOR","QAT":"QAT","IRQ":"IRQ","IRN":"IRN","SEN":"SEN",
+      "MAR":"MAR","EGY":"EGY","BEL":"BEL","CIV":"CIV","COL":"COL","AUS":"AUS",
+      "KOR":"KOR","MEX":"MEX","USA":"USA","GER":"GER","FRA":"FRA","ARG":"ARG",
+      "BRA":"BRA","ESP":"ESP","ENG":"ENG","NED":"NED","POR":"POR","TUN":"TUN",
+      "SWE":"SWE","JPN":"JPN","AUT":"AUT","CAN":"CAN","TUR":"TUR","RSA":"RSA",
+      "CZE":"CZE","MOR":"MAR","SEN":"SEN","GRE":"GRC"
+    };
+    const norm=function(c){return MAP[c]||c;};
+    // Fetch last 3 days to catch recently finished matches
+    const now=new Date();
+    const fmt=function(d){
+      const y=d.getFullYear();
+      const m=String(d.getMonth()+1).padStart(2,"0");
+      const day=String(d.getDate()).padStart(2,"0");
+      return y+m+day;
+    };
+    const dates=[fmt(now),fmt(new Date(now-86400000)),fmt(new Date(now-172800000))];
+    const allEvents=[];
+    for(let di=0;di<dates.length;di++){
+      try{
+        const r=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates="+dates[di]);
+        if(r.ok){
+          const d=await r.json();
+          if(d.events)allEvents.push.apply(allEvents,d.events);
+        }
+      }catch(e2){}
+    }
+    if(allEvents.length===0)throw new Error("ESPN: 0 matchs reçus — réessayez");
+    // Build updated matches
+    const updates={};
+    allEvents.forEach(function(ev){
       const comp=ev.competitions&&ev.competitions[0];
       if(!comp)return;
       const home=comp.competitors&&comp.competitors.find(function(c){return c.homeAway==="home";});
@@ -222,27 +250,27 @@ async function doRefresh(){
       if(!home||!away)return;
       const espnSt=ev.status&&ev.status.type&&ev.status.type.state;
       const st=espnSt==="post"?"final":espnSt==="in"?"live":"scheduled";
+      const hCode=norm(home.team.abbreviation);
+      const aCode=norm(away.team.abbreviation);
+      const key=hCode+"|"+aCode;
       const d=(ev.date||"").slice(0,10);
-      const headline=(comp.notes&&comp.notes[0]&&comp.notes[0].headline)||"";
-      const grMatch=headline.match(/Group\s+([A-L])/i);
-      const gr=grMatch?grMatch[1].toUpperCase():"";
-      newMatches.push({h:norm(home.team.abbreviation),a:norm(away.team.abbreviation),
-        hs:st!=="scheduled"?parseInt(home.score)||0:0,
+      const headline=(comp.notes&&comp.notes[0]&&comp.notes[0].headline)||ev.name||"";
+      const grMatch=headline.match(/Group\s+([A-L])/i)||headline.match(/Groupe\s+([A-L])/i);
+      updates[key]={hs:st!=="scheduled"?parseInt(home.score)||0:0,
         as:st!=="scheduled"?parseInt(away.score)||0:0,
-        st:st,d:d,gr:gr,g:[]});
+        st:st,d:d,gr:grMatch?grMatch[1].toUpperCase():""};
     });
-    if(newMatches.length>0){
-      // Merge: preserve existing goal data, update scores/status
-      const byKey={};
-      state.matches.forEach(function(m){byKey[m.h+"|"+m.a]=m;});
-      state.matches=newMatches.map(function(m){
-        const ex=byKey[m.h+"|"+m.a];
-        return ex?Object.assign({},ex,{hs:m.hs,as:m.as,st:m.st,d:m.d,gr:m.gr||ex.gr}):m;
-      });
-      setState({loading:false,err:null,refreshed:true});
-    } else {
-      throw new Error("Aucun match ESPN — réessayez");
-    }
+    // Merge with existing data
+    let count=0;
+    state.matches=state.matches.map(function(m){
+      const key=m.h+"|"+m.a;
+      if(updates[key]){
+        count++;
+        return Object.assign({},m,updates[key],{gr:updates[key].gr||m.gr,g:m.g});
+      }
+      return m;
+    });
+    setState({loading:false,err:null,refreshed:true});
   }catch(e){setState({loading:false,err:e.message});}
 }
 
