@@ -100,15 +100,15 @@ const MATCHES=[
   // ══ GROUPE K ══
   M("POR","COD",1,1,"2026-06-17","K",[{s:"H"},{s:"A"}]),
   M("COL","UZB",3,1,"2026-06-17","K",[{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
-  S("POR","UZB","2026-06-23","K","17:00",{h:85.8,a:4.2,d:10}),
-  S("COL","COD","2026-06-23","K","02:00",{h:62.6,a:14.1,d:23.3}),
+  M("POR","UZB",5,0,"2026-06-23","K",[{s:"H",m:6},{s:"H",m:17},{s:"H",m:39},{s:"H",m:60},{s:"H",m:87}]),
+  M("COL","COD",1,0,"2026-06-24","K",[{s:"H",m:76}]),
   S("COL","POR","2026-06-27","K","23:30",{h:35,a:45,d:20}),
   S("COD","UZB","2026-06-27","K","23:30",{h:55,a:20,d:25}),
   // ══ GROUPE L ══
   M("ENG","CRO",4,2,"2026-06-17","L",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"A"},{s:"A"}]),
   M("GHA","PAN",1,0,"2026-06-17","L",[{s:"H"}]),
-  S("ENG","GHA","2026-06-23","L","20:00",{h:83.1,a:4.9,d:12}),
-  S("PAN","CRO","2026-06-23","L","23:00",{h:13.9,a:65.4,d:20.7}),
+  M("ENG","GHA",0,0,"2026-06-23","L"),
+  M("PAN","CRO",0,1,"2026-06-23","L",[{s:"A",m:54}]),
   S("ENG","PAN","2026-06-27","L","23:00",{h:92,a:2,d:6}),
   S("GHA","CRO","2026-06-27","L","23:00",{h:35,a:40,d:25}),
 ];
@@ -123,8 +123,8 @@ const STANDINGS={
   H:[{t:"ESP",pts:4,w:1,d:1,l:0},{t:"URU",pts:2,w:0,d:2,l:0},{t:"CPV",pts:2,w:0,d:2,l:0},{t:"KSA",pts:1,w:0,d:1,l:1}],
   I:[{t:"FRA",pts:6,w:2,d:0,l:0},{t:"NOR",pts:6,w:2,d:0,l:0},{t:"SEN",pts:0,w:0,d:0,l:2},{t:"IRQ",pts:0,w:0,d:0,l:2}],
   J:[{t:"ARG",pts:6,w:2,d:0,l:0},{t:"AUT",pts:3,w:1,d:0,l:1},{t:"DZA",pts:3,w:1,d:0,l:1},{t:"JOR",pts:0,w:0,d:0,l:2}],
-  K:[{t:"COL",pts:3,w:1,d:0,l:0},{t:"COD",pts:1,w:0,d:1,l:0},{t:"POR",pts:1,w:0,d:1,l:0},{t:"UZB",pts:0,w:0,d:0,l:1}],
-  L:[{t:"ENG",pts:3,w:1,d:0,l:0},{t:"GHA",pts:3,w:1,d:0,l:0},{t:"PAN",pts:0,w:0,d:0,l:1},{t:"CRO",pts:0,w:0,d:0,l:1}],
+  K:[{t:"COL",pts:6,w:2,d:0,l:0},{t:"POR",pts:4,w:1,d:1,l:0},{t:"COD",pts:1,w:0,d:1,l:1},{t:"UZB",pts:0,w:0,d:0,l:2}],
+  L:[{t:"ENG",pts:4,w:1,d:1,l:0},{t:"GHA",pts:4,w:1,d:1,l:0},{t:"CRO",pts:3,w:1,d:0,l:1},{t:"PAN",pts:0,w:0,d:0,l:2}],
 };
 
 
@@ -270,7 +270,7 @@ async function doRefresh(){
       }
       return m;
     });
-    setState({loading:false,err:null,refreshed:true});
+    setState({loading:false,err:"✓ "+count+" matchs mis à jour",refreshed:true});
   }catch(e){setState({loading:false,err:e.message});}
 }
 
