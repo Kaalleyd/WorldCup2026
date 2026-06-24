@@ -100,15 +100,15 @@ const MATCHES=[
   // ══ GROUPE K ══
   M("POR","COD",1,1,"2026-06-17","K",[{s:"H"},{s:"A"}]),
   M("COL","UZB",3,1,"2026-06-17","K",[{s:"H"},{s:"H"},{s:"H"},{s:"A"}]),
-  M("POR","UZB",5,0,"2026-06-23","K",[{s:"H",m:6},{s:"H",m:17},{s:"H",m:39},{s:"H",m:60},{s:"H",m:87}]),
-  M("COL","COD",1,0,"2026-06-24","K",[{s:"H",m:76}]),
+  M("POR","UZB",5,0,"2026-06-23","K",[{s:"H",n:"Ronaldo",m:6},{s:"H",n:"N. Mendes",m:17},{s:"H",n:"Ronaldo",m:39},{s:"H",n:"Nematov og",m:60},{s:"H",n:"R. Leão",m:87}]),
+  M("COL","COD",1,0,"2026-06-24","K",[{s:"H",n:"D. Muñoz",m:76}]),
   S("COL","POR","2026-06-27","K","23:30",{h:35,a:45,d:20}),
   S("COD","UZB","2026-06-27","K","23:30",{h:55,a:20,d:25}),
   // ══ GROUPE L ══
   M("ENG","CRO",4,2,"2026-06-17","L",[{s:"H"},{s:"H"},{s:"H"},{s:"H"},{s:"A"},{s:"A"}]),
   M("GHA","PAN",1,0,"2026-06-17","L",[{s:"H"}]),
   M("ENG","GHA",0,0,"2026-06-23","L"),
-  M("PAN","CRO",0,1,"2026-06-23","L",[{s:"A",m:54}]),
+  M("PAN","CRO",0,1,"2026-06-23","L",[{s:"A",n:"Budimir",m:54}]),
   S("ENG","PAN","2026-06-27","L","23:00",{h:92,a:2,d:6}),
   S("GHA","CRO","2026-06-27","L","23:00",{h:35,a:40,d:25}),
 ];
@@ -206,71 +206,58 @@ function gStr(arr){
 async function doRefresh(){
   setState({loading:true,err:null});
   try{
-    // ESPN abbreviation → our FIFA codes (extended mapping)
-    const MAP={
-      "ALG":"DZA","DZA":"DZA","SAU":"KSA","KSA":"KSA","DRC":"COD","COD":"COD",
-      "HAI":"HTI","HTI":"HTI","BOH":"BIH","BIH":"BIH","SCO":"SCO","NZL":"NZL",
-      "CPV":"CPV","CVI":"CPV","CV":"CPV","SUI":"SUI","NOR":"NOR","CRO":"CRO",
-      "GHA":"GHA","PAN":"PAN","URU":"URU","PAR":"PAR","ECU":"ECU","CUW":"CUW",
-      "UZB":"UZB","JOR":"JOR","QAT":"QAT","IRQ":"IRQ","IRN":"IRN","SEN":"SEN",
-      "MAR":"MAR","EGY":"EGY","BEL":"BEL","CIV":"CIV","COL":"COL","AUS":"AUS",
-      "KOR":"KOR","MEX":"MEX","USA":"USA","GER":"GER","FRA":"FRA","ARG":"ARG",
-      "BRA":"BRA","ESP":"ESP","ENG":"ENG","NED":"NED","POR":"POR","TUN":"TUN",
-      "SWE":"SWE","JPN":"JPN","AUT":"AUT","CAN":"CAN","TUR":"TUR","RSA":"RSA",
-      "CZE":"CZE","MOR":"MAR","SEN":"SEN","GRE":"GRC"
-    };
-    const norm=function(c){return MAP[c]||c;};
-    // Fetch last 3 days to catch recently finished matches
-    const now=new Date();
-    const fmt=function(d){
-      const y=d.getFullYear();
-      const m=String(d.getMonth()+1).padStart(2,"0");
-      const day=String(d.getDate()).padStart(2,"0");
-      return y+m+day;
-    };
-    const dates=[fmt(now),fmt(new Date(now-86400000)),fmt(new Date(now-172800000))];
-    const allEvents=[];
-    for(let di=0;di<dates.length;di++){
+    // Primary: GitHub raw JSON (pushed manually when new results arrive)
+    const URLS=[
+      "https://raw.githubusercontent.com/Kaalleyd/WorldCup2026/master/live.json",
+      "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?limit=50",
+      "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldcup/scoreboard?limit=50",
+    ];
+    let parsed=null;
+    let usedUrl="";
+    for(let ui=0;ui<URLS.length;ui++){
       try{
-        const r=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates="+dates[di]);
-        if(r.ok){
-          const d=await r.json();
-          if(d.events)allEvents.push.apply(allEvents,d.events);
+        const r=await fetch(URLS[ui]);
+        if(!r.ok)continue;
+        const d=await r.json();
+        // GitHub live.json format: {matches:[...], standings:[...]}
+        if(d.matches&&d.matches.length>0){parsed=d;usedUrl=URLS[ui];break;}
+        // ESPN format: {events:[...]}
+        const evs=d.events||[];
+        if(evs.length>0){
+          const MAP={"ALG":"DZA","DZA":"DZA","SAU":"KSA","DRC":"COD","COD":"COD","HAI":"HTI","HTI":"HTI","BOH":"BIH","CPV":"CPV","MOR":"MAR"};
+          const norm=function(c){return MAP[c]||c;};
+          const matches=[];
+          evs.forEach(function(ev){
+            const comp=ev.competitions&&ev.competitions[0];
+            if(!comp)return;
+            const home=comp.competitors&&comp.competitors.find(function(c){return c.homeAway==="home";});
+            const away=comp.competitors&&comp.competitors.find(function(c){return c.homeAway==="away";});
+            if(!home||!away)return;
+            const st=(ev.status&&ev.status.type&&ev.status.type.state)==="post"?"final":(ev.status&&ev.status.type&&ev.status.type.state)==="in"?"live":"scheduled";
+            matches.push({h:norm(home.team.abbreviation),a:norm(away.team.abbreviation),hs:st!=="scheduled"?parseInt(home.score)||0:0,as:st!=="scheduled"?parseInt(away.score)||0:0,st:st,d:(ev.date||"").slice(0,10),gr:"",g:[]});
+          });
+          if(matches.length>0){parsed={matches:matches};usedUrl=URLS[ui];break;}
         }
       }catch(e2){}
     }
-    if(allEvents.length===0)throw new Error("ESPN: 0 matchs reçus — réessayez");
-    // Build updated matches
-    const updates={};
-    allEvents.forEach(function(ev){
-      const comp=ev.competitions&&ev.competitions[0];
-      if(!comp)return;
-      const home=comp.competitors&&comp.competitors.find(function(c){return c.homeAway==="home";});
-      const away=comp.competitors&&comp.competitors.find(function(c){return c.homeAway==="away";});
-      if(!home||!away)return;
-      const espnSt=ev.status&&ev.status.type&&ev.status.type.state;
-      const st=espnSt==="post"?"final":espnSt==="in"?"live":"scheduled";
-      const hCode=norm(home.team.abbreviation);
-      const aCode=norm(away.team.abbreviation);
-      const key=hCode+"|"+aCode;
-      const d=(ev.date||"").slice(0,10);
-      const headline=(comp.notes&&comp.notes[0]&&comp.notes[0].headline)||ev.name||"";
-      const grMatch=headline.match(/Group\s+([A-L])/i)||headline.match(/Groupe\s+([A-L])/i);
-      updates[key]={hs:st!=="scheduled"?parseInt(home.score)||0:0,
-        as:st!=="scheduled"?parseInt(away.score)||0:0,
-        st:st,d:d,gr:grMatch?grMatch[1].toUpperCase():""};
-    });
-    // Merge with existing data
-    let count=0;
-    state.matches=state.matches.map(function(m){
-      const key=m.h+"|"+m.a;
-      if(updates[key]){
-        count++;
-        return Object.assign({},m,updates[key],{gr:updates[key].gr||m.gr,g:m.g});
+    if(parsed&&parsed.matches&&parsed.matches.length>0){
+      const byKey={};
+      state.matches.forEach(function(m){byKey[m.h+"|"+m.a]=m;});
+      let count=0;
+      state.matches=parsed.matches.map?parsed.matches.map(function(m){
+        const ex=byKey[m.h+"|"+m.a];
+        if(ex){count++;return Object.assign({},ex,{hs:m.hs,as:m.as,st:m.st,d:m.d||ex.d,gr:m.gr||ex.gr,g:m.g&&m.g.length>0?m.g:ex.g});}
+        return m;
+      }):state.matches;
+      if(parsed.standings&&parsed.standings.length>=8){
+        const g={};parsed.standings.forEach(function(s){const k=s.gr||s.group;if(!g[k])g[k]=[];g[k].push({t:s.t||s.team,pts:s.pts,w:s.w,d:s.d,l:s.l});});
+        Object.keys(g).forEach(function(k){g[k].sort(function(a,b){return b.pts-a.pts;});});
+        if(Object.keys(g).length>=8)state.st=g;
       }
-      return m;
-    });
-    setState({loading:false,err:"✓ "+count+" matchs mis à jour",refreshed:true});
+      setState({loading:false,err:"✓ "+count+" matchs mis à jour",refreshed:true});
+    } else {
+      setState({loading:false,err:"Aucune source disponible — téléchargez le HTML mis à jour sur Claude",refreshed:state.refreshed});
+    }
   }catch(e){setState({loading:false,err:e.message});}
 }
 
