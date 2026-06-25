@@ -204,12 +204,29 @@ async function doRefresh(){
       var rj=await fetch("https://raw.githubusercontent.com/Kaalleyd/WorldCup2026/master/live.json");
       if(rj.ok)parsed=await rj.json();
     }catch(e2){}
-    // Étape 3 : fusion
+    // Étape 3 : fusion — on part de INIT, on ne supprime jamais de match
     if(parsed&&Array.isArray(parsed.matches)&&parsed.matches.length>0){
-      state.matches=parsed.matches.map(function(m){
-        var espn=liveMap[m.h+"|"+m.a];
-        var result=Object.assign({},m);
-        if(espn)Object.assign(result,espn);
+      // Indexer live.json par clé h|a
+      var liveByKey={};
+      parsed.matches.forEach(function(m){liveByKey[m.h+"|"+m.a]=m;});
+      // Mettre à jour chaque match existant sans en perdre aucun
+      state.matches=state.matches.map(function(m){
+        var key=m.h+"|"+m.a;
+        var lm=liveByKey[key];
+        var espn=liveMap[key];
+        var result=Object.assign({},m); // base = match original (préserve t, p, etc.)
+        if(lm){
+          // Mise à jour sélective depuis live.json
+          if(lm.hs!==undefined)result.hs=lm.hs;
+          if(lm.as!==undefined)result.as=lm.as;
+          if(lm.st)result.st=lm.st;
+          if(lm.d)result.d=lm.d;
+          if(lm.gr)result.gr=lm.gr;
+          if(Array.isArray(lm.g)&&lm.g.length>0)result.g=lm.g;
+        }
+        if(espn){ // ESPN a priorité pour le statut LIVE
+          result.hs=espn.hs;result.as=espn.as;result.st=espn.st;
+        }
         return result;
       });
       if(Array.isArray(parsed.standings)&&parsed.standings.length>=8){
