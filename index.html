@@ -420,12 +420,14 @@ function renderKO(main){
     ad2.appendChild(el("div",s({fontSize:"12px",fontWeight:"600",color:F[m.a]?"#e2e8f0":"#64748b"}),(N[m.a]||m.a)+" "+(F[m.a]||"")));
     row2.appendChild(ad2);
     card.appendChild(row2);
-    // Buteurs pour les matchs terminés
-    if(m.st==="final"&&Array.isArray(m.g)&&m.g.length>0){
+    // Buteurs : chercher dans state.matches (live.json) par clé h|a
+    var smatch=state.matches.filter(function(x){return x.h===m.h&&x.a===m.a;})[0];
+    var koGoals=smatch&&Array.isArray(smatch.g)&&smatch.g.length>0?smatch.g:(Array.isArray(m.g)&&m.g.length>0?m.g:[]);
+    if(m.st==="final"&&koGoals.length>0){
       var goalsKO=el("div",s({display:"flex",marginTop:"6px",gap:"8px",paddingTop:"6px",borderTop:"1px solid #0d1525"}));
       var hgKO=el("div",s({flex:"1",textAlign:"right"}));
       var agKO=el("div",s({flex:"1"}));
-      m.g.forEach(function(g){
+      koGoals.forEach(function(g){
         var txt=(g.n?g.n:"")+(g.m?" "+g.m+"'":"");
         if(!txt)return;
         var div=el("div",s({fontSize:"10px",color:"#4b6280"}),"⚽ "+txt);
