@@ -150,6 +150,12 @@ async function doRefresh(){
       }
       return r;
     });
+    // Ajouter les matchs nouveaux (R32, R16...) absents de INIT_MATCHES
+    var currentKeys={};
+    state.matches.forEach(function(m){currentKeys[m.h+"|"+m.a]=1;});
+    parsed.matches.forEach(function(lm){
+      if(!currentKeys[lm.h+"|"+lm.a])state.matches.push(lm);
+    });
     if(parsed&&Array.isArray(parsed.standings)&&parsed.standings.length>=8){
       var g={};
       parsed.standings.forEach(function(s){if(!g[s.gr])g[s.gr]=[];g[s.gr].push({t:s.t,pts:s.pts,w:s.w,d:s.d,l:s.l});});
@@ -413,7 +419,7 @@ function renderKO(main){
     hd2.appendChild(el("div",s({fontSize:"12px",fontWeight:"600",color:F[m.h]?"#e2e8f0":"#64748b"}),(F[m.h]||"")+" "+(N[m.h]||m.h)));
     row2.appendChild(hd2);
     var hasScore=(m.hs!==undefined&&m.as!==undefined&&m.st==="final");
-    var scoreText=hasScore?(m.hs+" - "+m.as+(m.note?" ("+m.note+")":"")):"?  -  ?";
+    var scoreText=hasScore?(m.hs+" - "+m.as):"?  -  ?";
     var scoreColor=hasScore?"#fff":"#1e3a5f";
     row2.appendChild(el("div",s({minWidth:"60px",textAlign:"center",fontSize:hasScore?"16px":"14px",fontWeight:"900",color:scoreColor,letterSpacing:hasScore?"2px":"0"}),scoreText));
     var ad2=el("div",s({flex:"1"}));
