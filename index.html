@@ -260,7 +260,7 @@ function renderMatch(m){
   var hG=(m.g||[]).filter(function(g){return g.s==="H";}),aG=(m.g||[]).filter(function(g){return g.s==="A";});
   var card=el("div",{style:{background:iC?"rgba(255,140,0,.055)":"#0d1b2e",border:"1px solid "+(iL?"#ef4444":iC?"rgba(255,140,0,.22)":"#1e2d45"),borderRadius:"9px",padding:"9px 11px",marginBottom:"5px"}});
   var row=el("div",s({display:"flex",alignItems:"center",gap:"5px"}));
-  row.appendChild(el("span",s({background:"#0f2040",color:"#475569",fontSize:"9px",fontWeight:"700",padding:"2px 5px",borderRadius:"4px",minWidth:"18px",textAlign:"center",flexShrink:"0"}),m.gr));
+  row.appendChild(el("span",s({background:m.gr==="R32"?"rgba(200,149,32,.15)":"#0f2040",color:m.gr==="R32"?"#c89520":"#475569",fontSize:"9px",fontWeight:"700",padding:"2px 5px",borderRadius:"4px",minWidth:"18px",textAlign:"center",flexShrink:"0"}),m.gr==="R32"?"16e":m.gr));
   // Home
   var hd=el("div",s({flex:"1",textAlign:"right",minWidth:"0"}));
   var hi=el("div",s({display:"flex",alignItems:"center",justifyContent:"flex-end",gap:"5px"}));
@@ -419,7 +419,26 @@ function renderKO(main){
     var ad2=el("div",s({flex:"1"}));
     ad2.appendChild(el("div",s({fontSize:"12px",fontWeight:"600",color:F[m.a]?"#e2e8f0":"#64748b"}),(N[m.a]||m.a)+" "+(F[m.a]||"")));
     row2.appendChild(ad2);
-    card.appendChild(row2);main.appendChild(card);
+    card.appendChild(row2);
+    // Buteurs pour les matchs terminés
+    if(m.st==="final"&&Array.isArray(m.g)&&m.g.length>0){
+      var goalsKO=el("div",s({display:"flex",marginTop:"6px",gap:"8px",paddingTop:"6px",borderTop:"1px solid #0d1525"}));
+      var hgKO=el("div",s({flex:"1",textAlign:"right"}));
+      var agKO=el("div",s({flex:"1"}));
+      m.g.forEach(function(g){
+        var txt=(g.n?g.n:"")+(g.m?" "+g.m+"'":"");
+        if(!txt)return;
+        var div=el("div",s({fontSize:"10px",color:"#4b6280"}),"⚽ "+txt);
+        if(g.s==="H")hgKO.appendChild(div); else agKO.appendChild(div);
+      });
+      goalsKO.appendChild(hgKO);
+      goalsKO.appendChild(el("div",s({width:"1px",background:"#1e2d45",flexShrink:"0"}),""));
+      goalsKO.appendChild(agKO);
+      card.appendChild(goalsKO);
+    }
+    // Note TAB
+    if(m.note){card.appendChild(el("div",s({fontSize:"9px",color:"#c89520",textAlign:"center",marginTop:"4px"}),m.note));}
+    main.appendChild(card);
   });
 }
 
