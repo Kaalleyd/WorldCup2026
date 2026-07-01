@@ -69,14 +69,14 @@ var STANDINGS={
 
 var KO=[
   {id:"r32",lb:"16èmes de Finale",matches:[
-    {no:73,h:"RSA",a:"CAN",d:"2026-06-28",v:"Los Angeles"},
-    {no:77,h:"FRA",a:"SWE",d:"2026-06-28",v:"New Jersey"},
-    {no:76,h:"BRA",a:"JPN",d:"2026-06-29",v:"Houston"},
-    {no:74,h:"GER",a:"PAR",d:"2026-06-29",v:"Boston"},
-    {no:75,h:"NED",a:"MAR",d:"2026-06-30",v:"Guadalajara"},
-    {no:78,h:"CIV",a:"NOR",d:"2026-06-30",v:"Dallas"},
-    {no:79,h:"MEX",a:"ECU",d:"2026-07-01",v:"Mexico City"},
-    {no:80,h:"ENG",a:"COD",d:"2026-07-01",v:"Atlanta"},
+    {no:73,h:"RSA",a:"CAN",hs:0,as:1,st:"final",d:"2026-06-28",v:"Los Angeles"},
+    {no:77,h:"FRA",a:"SWE",hs:3,as:0,st:"final",d:"2026-06-28",v:"New Jersey"},
+    {no:76,h:"BRA",a:"JPN",hs:2,as:1,st:"final",d:"2026-06-29",v:"Houston"},
+    {no:74,h:"GER",a:"PAR",hs:1,as:1,st:"final",note:"PAR 4-3 aux TAB",d:"2026-06-29",v:"Boston"},
+    {no:75,h:"NED",a:"MAR",hs:1,as:1,st:"final",note:"MAR 3-2 aux TAB",d:"2026-06-30",v:"Guadalajara"},
+    {no:78,h:"CIV",a:"NOR",hs:1,as:2,st:"final",d:"2026-06-30",v:"Dallas"},
+    {no:79,h:"MEX",a:"ECU",hs:2,as:0,st:"final",d:"2026-07-01",v:"Mexico City"},
+    {no:80,h:"ENG",a:"COD",hs:2,as:1,st:"final",d:"2026-07-01",v:"Atlanta"},
     {no:82,h:"BEL",a:"SEN",d:"2026-07-01",v:"Seattle"},
     {no:81,h:"USA",a:"BIH",d:"2026-07-01",v:"San Francisco"},
     {no:84,h:"ESP",a:"AUT",d:"2026-07-02",v:"Los Angeles"},
@@ -87,8 +87,8 @@ var KO=[
     {no:87,h:"COL",a:"GHA",d:"2026-07-03",v:"Kansas City"}
   ]},
   {id:"r16",lb:"Huitièmes de Finale",matches:[
-    {no:90,h:"V.M73",a:"V.M75",d:"2026-07-04",v:"Houston"},{no:89,h:"V.M74",a:"V.M77",d:"2026-07-04",v:"Philadelphie"},
-    {no:91,h:"V.M76",a:"V.M78",d:"2026-07-05",v:"New Jersey"},{no:92,h:"V.M79",a:"V.M80",d:"2026-07-05",v:"Mexico City"},
+    {no:90,h:"CAN",a:"MAR",d:"2026-07-04",v:"Houston"},{no:89,h:"PAR",a:"FRA",d:"2026-07-04",v:"Philadelphie"},
+    {no:91,h:"BRA",a:"NOR",d:"2026-07-05",v:"New Jersey"},{no:92,h:"MEX",a:"ENG",d:"2026-07-05",v:"Mexico City"},
     {no:93,h:"V.M83",a:"V.M84",d:"2026-07-06",v:"Dallas"},{no:94,h:"V.M81",a:"V.M82",d:"2026-07-06",v:"Seattle"},
     {no:95,h:"V.M86",a:"V.M88",d:"2026-07-07",v:"Atlanta"},{no:96,h:"V.M85",a:"V.M87",d:"2026-07-07",v:"Vancouver"}
   ]},
@@ -412,7 +412,10 @@ function renderKO(main){
     var hd2=el("div",s({flex:"1",textAlign:"right"}));
     hd2.appendChild(el("div",s({fontSize:"12px",fontWeight:"600",color:F[m.h]?"#e2e8f0":"#64748b"}),(F[m.h]||"")+" "+(N[m.h]||m.h)));
     row2.appendChild(hd2);
-    row2.appendChild(el("div",s({minWidth:"60px",textAlign:"center",fontSize:"14px",fontWeight:"900",color:"#1e3a5f"}),"?  -  ?"));
+    var hasScore=(m.hs!==undefined&&m.as!==undefined&&m.st==="final");
+    var scoreText=hasScore?(m.hs+" - "+m.as+(m.note?" ("+m.note+")":"")):"?  -  ?";
+    var scoreColor=hasScore?"#fff":"#1e3a5f";
+    row2.appendChild(el("div",s({minWidth:"60px",textAlign:"center",fontSize:hasScore?"16px":"14px",fontWeight:"900",color:scoreColor,letterSpacing:hasScore?"2px":"0"}),scoreText));
     var ad2=el("div",s({flex:"1"}));
     ad2.appendChild(el("div",s({fontSize:"12px",fontWeight:"600",color:F[m.a]?"#e2e8f0":"#64748b"}),(N[m.a]||m.a)+" "+(F[m.a]||"")));
     row2.appendChild(ad2);
