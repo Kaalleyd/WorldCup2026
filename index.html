@@ -114,7 +114,7 @@ async function doRefresh(){
   setState({loading:true,err:null});
   try{
     // 1. /api/scores → Vercel serverless → ESPN côté serveur (vrai temps réel)
-    var liveMap={};
+    var liveMap={},de=null;
     try{
       var r1=await fetch("/api/scores");
       if(r1.ok){
