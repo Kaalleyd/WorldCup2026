@@ -165,9 +165,10 @@ async function doRefresh(){
       if(Object.keys(g).length>=8)state.st=g;
     }
     var lc=Object.values(liveMap).filter(function(u){return u.st==="live";}).length;
-    var espnOk=Object.keys(liveMap).length>0;
+    var src=de&&de.source?de.source:"ESPN";
+    var srcLabel=src.indexOf("football-data")>=0?"football-data.org ✓":"ESPN live";
     setState({loading:false,refreshed:true,
-      err:lc>0?"🔴 "+lc+" match(s) en cours":espnOk?"✓ Scores mis à jour (ESPN live)":"✓ Buteurs chargés (ESPN indisponible)"});
+      err:lc>0?"🔴 "+lc+" match(s) en cours — "+srcLabel:"✓ Mis à jour via "+srcLabel});
   }catch(e){setState({loading:false,err:e.message});}
 }
 
